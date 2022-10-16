@@ -1,3 +1,14 @@
+/// {@category frontend}
+///
+/// Style guide for the app's UI. Just constants grouped under different Classes
+/// and Enums.
+///
+/// Things defined here:
+/// - [ColorPalette] — Color Scheme of the app
+/// - [WidthClass] — Screen Widths
+/// - [InsetSizes] — [EdgeInsets]'s for Padding & Margins
+/// - [FontStyles] — [TextStyle]'s for different text
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -28,11 +39,11 @@ class ColorPalette {
 // =========================
 
 /// Screen widths for adaptive layouts
-enum Width {
+enum WidthClass {
   /// 0px — 380px (mobiles, vertical)
   narrow,
 
-  /// 381px — 1100px (mobiles/tablets, horizontal)
+  /// 381px — 1200px (mobiles/tablets, horizontal)
   small,
 
   /// 1201px — ∞px (desktops, landscape)
@@ -40,15 +51,15 @@ enum Width {
 }
 
 /// Identifies the Width class of a display
-Width getWidthClass(BuildContext context) {
+WidthClass getWidthClass(BuildContext context) {
   var width = MediaQuery.of(context).size.width;
 
   if (width < 380) {
-    return Width.narrow;
+    return WidthClass.narrow;
   } else if (width < 1200) {
-    return Width.small;
+    return WidthClass.small;
   } else {
-    return Width.wide;
+    return WidthClass.wide;
   }
 }
 
@@ -57,15 +68,15 @@ Width getWidthClass(BuildContext context) {
 // ===================
 
 /// Edge insets for Margins and Padding
-class InsetSize {
+class InsetSizes {
   /// narrow — 3px
-  static const narrow = 3;
+  static const narrow = EdgeInsets.all(3);
 
   /// medium — 5px
-  static const medium = 5;
+  static const medium = EdgeInsets.all(5);
 
   /// wide — 7px
-  static const wide = 7;
+  static const wide = EdgeInsets.all(7);
 }
 
 // ========================
