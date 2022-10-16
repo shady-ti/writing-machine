@@ -1,0 +1,43 @@
+<mxfile host="65bd71144e">
+    <diagram id="b82aj__pMzovS4hmWyuq" name="Page-1">
+        <mxGraphModel dx="795" dy="545" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="20" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillOpacity=100;strokeWidth=2;" edge="1" parent="1" source="2" target="18">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="21" style="edgeStyle=none;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;fillOpacity=100;strokeWidth=2;" edge="1" parent="1" source="2" target="19">
+                    <mxGeometry relative="1" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="ticker state" style="ellipse;whiteSpace=wrap;html=1;fillOpacity=100;strokeWidth=2;sketch=0;" vertex="1" parent="1">
+                    <mxGeometry x="414" y="60" width="90" height="90" as="geometry"/>
+                </mxCell>
+                <mxCell id="22" style="edgeStyle=orthogonalEdgeStyle;html=1;entryX=1;entryY=1;entryDx=0;entryDy=0;curved=1;strokeWidth=4;fillColor=#a20025;strokeColor=#6F0000;fillOpacity=100;" edge="1" parent="1" source="18" target="10">
+                    <mxGeometry relative="1" as="geometry">
+                        <Array as="points">
+                            <mxPoint x="491" y="260"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="input screen" style="whiteSpace=wrap;html=1;fillOpacity=100;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="160" y="260" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="23" style="edgeStyle=orthogonalEdgeStyle;curved=1;html=1;strokeWidth=4;entryX=1;entryY=0.5;entryDx=0;entryDy=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;fillColor=#a20025;strokeColor=#6F0000;fillOpacity=100;" edge="1" parent="1" source="19" target="10">
+                    <mxGeometry relative="1" as="geometry">
+                        <mxPoint x="640" y="150" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="600" y="105"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="19" value="progress screen" style="whiteSpace=wrap;html=1;fillOpacity=100;strokeWidth=2;" vertex="1" parent="1">
+                    <mxGeometry x="510" y="270" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="2" value="ticker widget" style="whiteSpace=wrap;html=1;fillOpacity=100;strokeWidth=2;sketch=0;" vertex="1" parent="1">
+                    <mxGeometry x="320" y="130" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
