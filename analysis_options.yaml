@@ -27,6 +27,9 @@ linter:
     - avoid_print
     - always_use_package_imports
     - prefer_interpolation_to_compose_strings
+    - public_member_api_docs
+    - require_trailing_commas
+
     # avoid_print: false  # Uncomment to disable the `avoid_print` rule
     # prefer_single_quotes: true  # Uncomment to enable the `prefer_single_quotes` rule
 # Additional information about this file can be found at
