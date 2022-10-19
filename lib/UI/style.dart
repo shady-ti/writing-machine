@@ -63,6 +63,18 @@ WidthClass getWidthClass(BuildContext context) {
   }
 }
 
+R valueSet<R>(R narrowV, R smallV, R wideV, BuildContext context) {
+  var widthClass = getWidthClass(context);
+
+  if (widthClass == WidthClass.narrow) {
+    return narrowV;
+  } else if (widthClass == WidthClass.small) {
+    return smallV;
+  } else {
+    return wideV;
+  }
+}
+
 // ===================
 // ===== Padding =====
 // ===================
@@ -100,3 +112,9 @@ class FontStyles {
   /// headings
   static const heading1 = TextStyle(fontSize: 35, fontWeight: FontWeight.w900);
 }
+
+double getFractionalWidth(double fraction, BuildContext context) =>
+    MediaQuery.of(context).size.width * fraction;
+
+double getFractionalHeight(double fraction, BuildContext context) =>
+    MediaQuery.of(context).size.height * fraction;

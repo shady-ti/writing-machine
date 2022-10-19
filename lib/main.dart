@@ -7,9 +7,12 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
+import 'package:writing_machine/UI/ticker_inputs.dart';
 
 // Project imports:
 import 'package:writing_machine/model/ticker.dart';
+
+import 'UI/style.dart';
 
 void main(List<String> args) async {
   var ticker = Ticker(
@@ -26,28 +29,19 @@ void main(List<String> args) async {
     ),
   );
 
-  await ticker.startPlayback();
+  // await ticker.startPlayback();
 }
 
 class Test extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Consumer<Ticker>(
-      builder: (context, ticker, child) {
-        var playbackTime = ticker.timeBetweenTicks.inSeconds;
-
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                '${ticker.tick}/${ticker.totalTicks}',
-              ),
-              Text(Duration(seconds: ticker.tick * playbackTime).toString())
-            ],
-          ),
-        );
-      },
+    return Center(
+      child: NumberWheel(
+        textController: TextEditingController(),
+        startNumber: 1,
+        endNumber: 20,
+        increment: 1,
+      ),
     );
   }
 }
