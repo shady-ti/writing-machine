@@ -10,6 +10,7 @@ import 'package:provider/provider.dart';
 
 // Project imports:
 import 'package:writing_machine/UI/number_wheel.dart';
+import 'package:writing_machine/UI/ticker_input_screen.dart';
 import 'package:writing_machine/model/ticker.dart';
 
 void main(List<String> args) async {
@@ -33,16 +34,7 @@ void main(List<String> args) async {
 class Test extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: NumberWheel(
-        initialValue: 1,
-        finalValue: 10.2,
-        increment: 0.5,
-        onStateChange: (state) {
-          print(state.value);
-        },
-      ),
-    );
+    return Center(child: TickerInputScreen());
   }
 }
 

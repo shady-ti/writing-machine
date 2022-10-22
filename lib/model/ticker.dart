@@ -93,11 +93,18 @@ class Ticker extends ChangeNotifier {
 
   /// Stop playing ticking sounds
   Future<void> stopPlayback() async {
+    _timer.cancel();
+
     await _tickPlayer.dispose();
     await _tockPlayer.dispose();
-    _timer.cancel();
 
     // trigger rebuild
     notifyListeners();
+  }
+
+  @override
+  void dispose() async {
+    await stopPlayback();
+    super.dispose();
   }
 }

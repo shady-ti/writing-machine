@@ -127,7 +127,8 @@ class NumberWheelState extends ChangeNotifier {
     required this.increment,
   }) {
     textController = TextEditingController(text: defaultValue.toString());
-    scrollController = FixedExtentScrollController();
+    scrollController =
+        FixedExtentScrollController(initialItem: (defaultValue - initialValue) ~/ increment);
 
     value = defaultValue;
 
@@ -183,7 +184,7 @@ class NumberWheel extends StatelessWidget {
     num? defaultValue,
     required num initialValue,
     required num finalValue,
-    required num increment,
+    num increment = 1,
     void Function(NumberWheelState state)? onStateChange,
   }) {
     _state = NumberWheelState(
