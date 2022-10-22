@@ -1,3 +1,48 @@
+/// {@category frontend}
+///
+/// The [NumberWheel] Widget
+///
+/// <table>
+///
+/// <tr>
+/// <td>Code</td>
+/// <td>Widget</td>
+/// </tr>
+///
+/// <tr>
+/// <td>
+///
+/// ```dart
+/// class Test extends StatelessWidget {
+///   @override
+///   Widget build(BuildContext context) {
+///     return Center(
+///       child: NumberWheel(
+///         initialValue: 1,
+///         finalValue: 10.2,
+///         increment: 0.5,
+///         onStateChange: (state) {
+///           print(state.value);
+///         },
+///       ),
+///     );
+///   }
+/// }
+/// ```
+///
+/// </td>
+/// <td>
+/// <p align="center">
+///
+/// ![NumberWheel Example (ScrollMode)](../../assets/docs/NumberWheelScrollMode.png)
+///
+/// ![NumberWheel Example (TextMode)](../../assets/docs/NumberWheelTextMode.png)
+///
+/// </p>
+/// </td>
+/// </tr>
+/// </table>
+
 // Flutter imports:
 import 'package:flutter/material.dart';
 
@@ -125,6 +170,14 @@ class NumberWheel extends StatelessWidget {
   late final NumberWheelState _state;
 
   /// Create a [NumberWheel]
+  ///
+  /// ### Args
+  /// - `initialValue`, the first value on the [NumberWheel]
+  /// - `finalValue`, last value on the number wheel (exclusive — numbers up to,
+  /// but not including this one will be displayed)
+  /// - `increment`, Increment between number wheel entries
+  /// - `defaultValue`, Value to set the [NumberWheel] to when it is first rendered
+  /// - `onStateChange`, callback for when the [NumberWheelState] changes
   NumberWheel({
     super.key,
     num? defaultValue,
