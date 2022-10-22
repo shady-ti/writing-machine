@@ -7,12 +7,10 @@ import 'package:flutter/material.dart';
 
 // Package imports:
 import 'package:provider/provider.dart';
-import 'package:writing_machine/UI/ticker_inputs.dart';
+import 'package:writing_machine/UI/number_wheel.dart';
 
 // Project imports:
 import 'package:writing_machine/model/ticker.dart';
-
-import 'UI/style.dart';
 
 void main(List<String> args) async {
   var ticker = Ticker(
@@ -36,12 +34,7 @@ class Test extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: NumberWheel(
-        textController: TextEditingController(),
-        startNumber: 1,
-        endNumber: 20,
-        increment: 1,
-      ),
+      child: NumberWheel(initialValue: 1, finalValue: 10.2, increment: 0.5),
     );
   }
 }

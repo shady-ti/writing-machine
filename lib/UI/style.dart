@@ -118,3 +118,13 @@ double getFractionalWidth(double fraction, BuildContext context) =>
 
 double getFractionalHeight(double fraction, BuildContext context) =>
     MediaQuery.of(context).size.height * fraction;
+
+BoxDecoration getBoxDecoration({
+  Color borderColor = const Color(0x00000000),
+  Color backgroundColor = const Color(0x00000000),
+}) =>
+    BoxDecoration(
+      border: Border.all(color: borderColor),
+      color: backgroundColor,
+      borderRadius: BorderRadius.circular(4),
+    );

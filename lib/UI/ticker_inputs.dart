@@ -1,179 +1,152 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:writing_machine/UI/number_wheel.temp.dart';
 import 'package:writing_machine/UI/style.dart';
+import 'package:writing_machine/model/ticker.dart';
 
-/// Numeric Input wheel where you can also type in the values
-class NumberWheel extends StatefulWidget {
-  /// [TextEditingController] that is used to communicate the chosen values
-  /// up and down the widget tree
-  final TextEditingController textController;
-
-  final num startNumber, endNumber, increment;
-
-  /// Create a [NumberWheel]
-  const NumberWheel({
-    super.key,
-    required this.textController,
-    required this.startNumber,
-    required this.endNumber,
-    this.increment = 1,
-  });
-
+class TickerInputs extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _NumberWheelState();
+  State<StatefulWidget> createState() => _TickerInputsState();
 }
 
-class _NumberWheelState extends State<NumberWheel> {
-  /// `true` is the widget is in [TextField] mode
-  bool isTextModeActive = false;
+class _TickerInputsState extends State<TickerInputs> {
+  var hourController = TextEditingController(text: '1');
+  var minuteController = TextEditingController(text: '0');
+  var secondController = TextEditingController(text: '5');
 
-  /// up-tree pass down, used to share about the chosen value
-  late TextEditingController textController;
+  late Ticker ticker;
 
-  /// keeps getting replaced when switching back to scroll mode
-  var scrollController = FixedExtentScrollController();
-
-  /// parse both int's and double's
-  ///
-  /// ### NOTE
-  /// - Returns `0` if input can't be parsed
-  num parseNumber(String text) =>
-      (int.tryParse(textController.text) ?? double.tryParse(textController.text)) ?? 0;
-
-  @override
-  void initState() {
-    super.initState();
-
-    textController = widget.textController;
-  }
+  var inInputMode = true;
 
   @override
   Widget build(BuildContext context) {
-    // input box size
-    return FractionallySizedBox(
-      widthFactor: valueSet<double>(0.2, 0.15, 0.1, context),
-      heightFactor: 0.2,
-      // input box borders
-      child: Container(
-        decoration: BoxDecoration(
-          border: Border.all(color: ColorPalette.lavenderGray),
-          borderRadius: BorderRadius.circular(4),
-        ),
-        // Text or Scroll View
-        child: Center(
-          child: isTextModeActive
-              ? CustomTextInput(
-                  controller: textController,
-                  onEditingCompleteCallback: () => setState(
-                    () {
-                      isTextModeActive = false;
+    return inInputMode
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Total writing time',
+                        style: FontStyles.heading1,
+                      ),
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              NumberWheel(
+                                textController: hourController,
+                                startNumber: 0,
+                                endNumber: 25,
+                              ),
+                              const Text('Hours')
+                            ],
+                          ),
+                          SizedBox(
+                            width: getFractionalWidth(0.01, context),
+                          ),
+                          Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              NumberWheel(
+                                textController: minuteController,
+                                startNumber: 0,
+                                endNumber: 61,
+                              ),
+                              const Text('Minutes')
+                            ],
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: getFractionalWidth(0.05, context),
+                  ),
+                  Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text(
+                        'Sec/Word',
+                        style: FontStyles.heading1,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          NumberWheel(
+                            textController: secondController,
+                            startNumber: 1,
+                            endNumber: 61,
+                          ),
+                          const Text('Seconds')
+                        ],
+                      )
+                    ],
+                  )
+                ],
+              ),
+              TextButton(
+                onPressed: () async {
+                  setState(() {
+                    ticker = Ticker(
+                      totalDuration: Duration(
+                        hours: int.parse(hourController.text),
+                        minutes: int.parse(minuteController.text),
+                      ),
+                      timeBetweenTicks: Duration(seconds: int.parse(secondController.text)),
+                    );
+                  });
 
-                      if (parseNumber(textController.text) > widget.endNumber) {
-                        textController.text = '${widget.endNumber}';
-                      }
+                  await ticker.startPlayback();
 
-                      if (parseNumber(textController.text) < widget.startNumber) {
-                        textController.text = '${widget.startNumber}';
-                      }
+                  setState(() {
+                    inInputMode = false;
+                  });
+                },
+                child: const Text(
+                  'Start',
+                  style: FontStyles.heading3,
+                ),
+              )
+            ],
+          )
+        : Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  'Words: ${ticker.tick}/${ticker.totalTicks}',
+                  style: FontStyles.heading3,
+                ),
+                Text(
+                  ' Time: ${(ticker.timeBetweenTicks * ticker.tick).toString().substring(0, 9)}/${ticker.totalDuration.toString().substring(0, 9)}',
+                  style: FontStyles.heading3,
+                ),
+                Center(
+                  child: TextButton(
+                    onPressed: () {
+                      ticker.stopPlayback();
 
-                      scrollController = FixedExtentScrollController(
-                        initialItem: (parseNumber(textController.text) - widget.startNumber) ~/
-                            widget.increment,
-                      );
+                      setState(() {
+                        inInputMode = true;
+                      });
                     },
+                    child: const Text(
+                      'Cancel',
+                      style: FontStyles.heading3,
+                    ),
                   ),
                 )
-              : ValueScroll(
-                  controller: scrollController,
-                  items: [
-                    for (int index = 0;
-                        index < (widget.endNumber - widget.startNumber) ~/ widget.increment;
-                        index++)
-                      Center(
-                        child: Text(
-                          '${widget.startNumber + (index * widget.increment)}',
-                          style: FontStyles.heading3,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
-                  ],
-                  onTap: () => setState(() {
-                    isTextModeActive = true;
-
-                    var elementCount = (widget.endNumber - widget.startNumber) ~/ widget.increment;
-
-                    if (scrollController.selectedItem > 0) {
-                      textController.text =
-                          '${widget.startNumber + ((scrollController.selectedItem % elementCount) * widget.increment)}';
-                    } else {
-                      textController.text =
-                          '${widget.startNumber + ((elementCount + 1 - (scrollController.selectedItem.abs() % elementCount)) * widget.increment)}';
-                    }
-                  }),
-                ),
-        ),
-      ),
-    );
-  }
-}
-
-class CustomTextInput extends StatelessWidget {
-  late TextEditingController controller;
-
-  late void Function() onEditingCompleteCallback;
-
-  ///
-  CustomTextInput({
-    super.key,
-    required this.onEditingCompleteCallback,
-    required this.controller,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return TextField(
-      controller: controller,
-      keyboardType: TextInputType.number,
-      style: FontStyles.heading3,
-      textAlign: TextAlign.center,
-      textAlignVertical: TextAlignVertical.center,
-      decoration: null,
-      onEditingComplete: onEditingCompleteCallback,
-      autofocus: true,
-    );
-  }
-}
-
-/// A [ListWheelScrollView] of numeric values
-class ValueScroll extends StatelessWidget {
-  /// Items to display on the wheel
-  final List<Widget> items;
-
-  /// up-tree passed down Scroll controller
-  final FixedExtentScrollController controller;
-
-  /// Set up-tree state/translate values
-  final void Function() onTap;
-
-  /// Create a [ValueScroll]
-  const ValueScroll({
-    super.key,
-    required this.controller,
-    required this.items,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    // switch to TextMode on tap
-    return GestureDetector(
-      onTap: onTap,
-      child: ListWheelScrollView.useDelegate(
-        diameterRatio: 1,
-        overAndUnderCenterOpacity: 0.5,
-        itemExtent: getFractionalHeight(0.05, context),
-        childDelegate: ListWheelChildLoopingListDelegate(children: items),
-        controller: controller,
-      ),
-    );
+              ],
+            ),
+          );
   }
 }

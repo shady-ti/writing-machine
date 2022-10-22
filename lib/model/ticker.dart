@@ -53,6 +53,7 @@ class Ticker extends ChangeNotifier {
 
     // 1. Player for the 'tick' sound
     _tickPlayer = AudioPlayer(playerId: 'playback-tick');
+    await _tickPlayer.setReleaseMode(ReleaseMode.stop);
 
     customTick == null
         ? await _tickPlayer.setSourceAsset('tick.wav')
@@ -60,6 +61,7 @@ class Ticker extends ChangeNotifier {
 
     // 2. Player for the 'tock' sound
     _tockPlayer = AudioPlayer(playerId: 'playback-tock');
+    await _tockPlayer.setReleaseMode(ReleaseMode.stop);
 
     customTock == null
         ? await _tockPlayer.setSourceAsset('tock.wav')
