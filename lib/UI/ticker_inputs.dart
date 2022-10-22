@@ -1,5 +1,8 @@
+// Flutter imports:
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+
+// Project imports:
 import 'package:writing_machine/UI/number_wheel.temp.dart';
 import 'package:writing_machine/UI/style.dart';
 import 'package:writing_machine/model/ticker.dart';
